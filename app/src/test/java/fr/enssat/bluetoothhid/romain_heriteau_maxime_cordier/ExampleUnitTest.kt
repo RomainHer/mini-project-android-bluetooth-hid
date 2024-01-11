@@ -1,4 +1,4 @@
-package fr.enssat.bluetoothhid.heriteau_romain_cordier_maxime
+package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier
 
 import org.junit.Test
 
