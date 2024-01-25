@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         val bluetoothManager =
             getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+
         mBluetoothAdapter = bluetoothManager.adapter
 
         btnBt.setOnClickListener {
@@ -68,7 +69,6 @@ class MainActivity : AppCompatActivity() {
             // Bluetooth est activé, le désactiver
             mBluetoothAdapter.disable()
         } else {
-
             mBluetoothAdapter.enable()
         }
     }
