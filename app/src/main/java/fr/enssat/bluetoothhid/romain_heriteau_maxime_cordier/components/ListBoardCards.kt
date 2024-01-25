@@ -1,21 +1,32 @@
 package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.components
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun ListBoardCards() {
-    ListItem(
-        headlineContent = { Text("One line list item with 24x24 icon") },
-        leadingContent = {
-            Icon(
-                Icons.Filled.Favorite,
-                contentDescription = "Localized description",
-            )
+
+    var myList = listOf("Canada", "China", "USA", "Pakistan")
+
+
+    LazyColumn {
+        items(myList.size) { index ->
+            Card(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    modifier = Modifier.padding(12.dp),
+                    text = "${myList.get(index)}"
+                )
+            }
         }
-    )
+    }
 }
