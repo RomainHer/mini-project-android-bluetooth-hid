@@ -1,47 +1,61 @@
 package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier
 
+
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.components.ListBoardCards
-import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.theme.BluetoothHIDTheme
+import androidx.navigation.compose.rememberNavController
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothController
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.navigation.NavGraph
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.theme.SimpleNavComposeAppTheme
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            BluetoothHIDTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    ListBoardCards()
-                }
+    companion object {
+        const val TAG = "MainActivity"
+    }
+
+    private lateinit var bluetoothController: BluetoothController
+
+    private fun ensureBluetoothPermission(activity: ComponentActivity) {
+        val requestPermissionLauncher = activity.registerForActivityResult(ActivityResultContracts.RequestPermission()){
+                isGranted: Boolean ->
+            if (isGranted) {
+                Log.d(MainActivity.TAG, "Bluetooth connection granted")
+            } else { Log.e(MainActivity.TAG, "Bluetooth connection not granted, Bye!")
+                activity.finish()
             }
         }
+        requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_ADMIN)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT)
+        }
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        ensureBluetoothPermission(this)
+        bluetoothController = BluetoothController()
+        setContent {
+            MainScreen()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        bluetoothController.release()
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BluetoothHIDTheme {
-        Greeting("Android")
+private fun MainScreen() {
+    SimpleNavComposeAppTheme {
+        val navController = rememberNavController()
+        NavGraph(navController)
     }
 }
+
+typealias KeyModifier = Int
