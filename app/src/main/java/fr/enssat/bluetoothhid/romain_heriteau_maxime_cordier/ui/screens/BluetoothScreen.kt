@@ -1,10 +1,5 @@
 package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens
 
-import android.Manifest
-import android.os.Build
-import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -22,13 +17,14 @@ import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.Blueto
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothDesk
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothUiConnection
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.theme.SimpleNavComposeAppTheme
-
+import java.sql.Types.NULL
 
 
 @Composable
 fun BluetoothScreen(
     navigateToBluetooth: () -> Unit,
     navigateToHome: () -> Unit,
+    bluetoothController: BluetoothController
 
 ) {
     Surface(
@@ -64,7 +60,7 @@ fun BluetoothScreen(
                 modifier = Modifier.fillMaxWidth().padding(vertical = 50.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                val bluetoothController = BluetoothController()
+
                 BluetoothUiConnection(bluetoothController)
                 BluetoothDesk(bluetoothController)
             }
@@ -76,6 +72,8 @@ fun BluetoothScreen(
 @Preview(showBackground = true)
 @Composable
 private fun DefaultPreview() {
+    val previewBluetoothController = BluetoothController()
+
     SimpleNavComposeAppTheme(useSystemUiController = false) {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -83,7 +81,8 @@ private fun DefaultPreview() {
         ) {
             BluetoothScreen(
                 navigateToBluetooth = {},
-                navigateToHome = {}
+                navigateToHome = {},
+                bluetoothController = previewBluetoothController,
             )
         }
     }

@@ -79,7 +79,7 @@ fun BluetoothUiConnection(bluetoothController: BluetoothController) {
             }
             Text(
                 //modifier=Modifier.align(Alignment.CenterHorizontally),
-                text = bluetoothController.status.display,
+                text = bluetoothController.status.display, color=Color.White
 
             )
 
@@ -87,7 +87,7 @@ fun BluetoothUiConnection(bluetoothController: BluetoothController) {
                 if (btOn) Icons.Default.Bluetooth else Icons.Default.BluetoothDisabled,
                 "bluetooth",
                 modifier = Modifier.size(100.dp),
-                tint = if (btOn) Color.Blue else Color.Black,
+                tint = if (btOn) Color.Blue else Color.White,
             )
             if (btOn) {
                 Button(
@@ -120,7 +120,7 @@ fun BluetoothDesk(bluetoothController: BluetoothController) {
         Column( modifier = Modifier.fillMaxWidth().padding(20.dp)) {
 
             Spacer(modifier = Modifier.size(20.dp))
-            Text("Slide Desk")
+            Text("Slide Desk", color=Color.White)
             Spacer(modifier = Modifier.size(10.dp))
 
             Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
