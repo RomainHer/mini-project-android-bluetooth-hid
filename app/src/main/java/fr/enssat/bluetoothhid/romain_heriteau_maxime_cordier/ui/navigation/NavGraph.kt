@@ -62,7 +62,9 @@ private fun addHomeScreen(
                 navController.navigate(NavRoute.Home.path)
             },
             navigateToBoard = { boardName ->
-                navController.navigate(NavRoute.BoardPage.path+"/$boardName")
+                navController.navigate(NavRoute.BoardPage.path+"/$boardName") {
+                    popUpTo(NavRoute.Home.path)
+                }
             }
         )
     }
