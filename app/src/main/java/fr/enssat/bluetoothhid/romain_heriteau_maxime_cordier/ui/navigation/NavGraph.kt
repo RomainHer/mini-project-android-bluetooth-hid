@@ -7,11 +7,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothController
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens.BluetoothScreen
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens.BoardScreen
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens.HomeScreen
 
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController, bluetoothController: BluetoothController) {
 
     NavHost(
         navController = navController,
@@ -20,16 +22,17 @@ fun NavGraph(navController: NavHostController) {
 
         addHomeScreen(navController, this)
 
-        addBluetoothScreen(navController, this)
+        addBluetoothScreen(navController, this, bluetoothController)
 
-
+        addBoardSreen(navController, this)
     }
 }
 
 
 private fun addBluetoothScreen(
     navController: NavHostController,
-    navGraphBuilder: NavGraphBuilder
+    navGraphBuilder: NavGraphBuilder,
+    bluetoothController: BluetoothController,
 ) {
     navGraphBuilder.composable(route = NavRoute.BluetoothPage.path) {
         BluetoothScreen(
@@ -38,7 +41,8 @@ private fun addBluetoothScreen(
             },
             navigateToHome = {
                 navController.navigate(NavRoute.Home.path)
-            }
+            },
+            bluetoothController = bluetoothController
         )
     }
 }
@@ -53,6 +57,24 @@ private fun addHomeScreen(
 
             navigateToBluetooth =  {
             navController.navigate(NavRoute.BluetoothPage.path)
+            },
+            navigateToHome = {
+                navController.navigate(NavRoute.Home.path)
+            }
+        )
+    }
+}
+
+private fun addBoardSreen(
+    navController: NavHostController,
+    navGraphBuilder: NavGraphBuilder
+) {
+    navGraphBuilder.composable(route = NavRoute.BoardPage.path) {
+
+        BoardScreen(
+            boardName = "",
+            navigateToBluetooth =  {
+                navController.navigate(NavRoute.BluetoothPage.path)
             },
             navigateToHome = {
                 navController.navigate(NavRoute.Home.path)

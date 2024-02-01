@@ -1,7 +1,16 @@
 package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -13,30 +22,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothController
-import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothDesk
-import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothUiConnection
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.theme.SimpleNavComposeAppTheme
-import java.sql.Types.NULL
-
 
 @Composable
-fun BluetoothScreen(
-    navigateToBluetooth: () -> Unit,
-    navigateToHome: () -> Unit,
-    bluetoothController: BluetoothController
-
+fun BoardScreen(
+    boardName : String,
+    navigateToBluetooth : () -> Unit,
+    navigateToHome : () -> Unit,
 ) {
+
     Surface(
-        modifier = Modifier.fillMaxSize().background(Color.Black),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black),
         color = MaterialTheme.colors.background
-    ) {
+    ){
         Column(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 50.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 50.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 30.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 30.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 DefaultButton(
@@ -49,44 +59,34 @@ fun BluetoothScreen(
                     onClick = { navigateToHome() }
                 )
             }
+            Spacer(modifier = Modifier
+                .height(1.dp)
+                .background(Color.White)
+                .padding(top = 5.dp))
 
-            Spacer(modifier = Modifier.height(1.dp).background(Color.White).padding(top = 5.dp))
-
-            Text("Bluetooth", fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            Text(boardName, fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 50.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-
-                BluetoothUiConnection(bluetoothController)
-                BluetoothDesk(bluetoothController)
-            }
+            ListToucheCards()
         }
     }
-}
 
+}
 
 @Preview(showBackground = true)
 @Composable
 private fun DefaultPreview() {
-    val previewBluetoothController = BluetoothController()
-
     SimpleNavComposeAppTheme(useSystemUiController = false) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            BluetoothScreen(
-                navigateToBluetooth = {},
-                navigateToHome = {},
-                bluetoothController = previewBluetoothController,
+            BoardScreen(
+                boardName = "",
+                navigateToBluetooth={},
+                navigateToHome= {},
             )
         }
     }
 }
-
-
-

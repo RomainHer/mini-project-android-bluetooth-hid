@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
         ensureBluetoothPermission(this)
         bluetoothController = BluetoothController()
         setContent {
-            MainScreen()
+            MainScreen(bluetoothController)
         }
     }
 
@@ -51,10 +51,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun MainScreen() {
+private fun MainScreen(
+    bluetoothController : BluetoothController
+) {
     SimpleNavComposeAppTheme {
         val navController = rememberNavController()
-        NavGraph(navController)
+        NavGraph(navController, bluetoothController)
     }
 }
 
