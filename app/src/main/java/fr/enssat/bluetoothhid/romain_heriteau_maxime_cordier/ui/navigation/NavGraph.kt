@@ -24,7 +24,7 @@ fun NavGraph(navController: NavHostController, bluetoothController: BluetoothCon
 
         addBluetoothScreen(navController, this, bluetoothController)
 
-        addBoardSreen(navController, this)
+        addBoardScreen(navController, this)
     }
 }
 
@@ -60,19 +60,22 @@ private fun addHomeScreen(
             },
             navigateToHome = {
                 navController.navigate(NavRoute.Home.path)
+            },
+            navigateToBoard = { boardName ->
+                navController.navigate(NavRoute.BoardPage.path+"/$boardName")
             }
         )
     }
 }
 
-private fun addBoardSreen(
+private fun addBoardScreen(
     navController: NavHostController,
     navGraphBuilder: NavGraphBuilder
 ) {
-    navGraphBuilder.composable(route = NavRoute.BoardPage.path) {
+    navGraphBuilder.composable(route = NavRoute.BoardPage.path + "/{boardName}") { backStackEntry ->
 
         BoardScreen(
-            boardName = "",
+            backStackEntry.arguments?.getString("boardName") ?: "",
             navigateToBluetooth =  {
                 navController.navigate(NavRoute.BluetoothPage.path)
             },

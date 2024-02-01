@@ -26,6 +26,7 @@ import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.theme.SimpleNavC
 fun HomeScreen(
     navigateToBluetooth: () -> Unit,
     navigateToHome: () -> Unit,
+    navigateToBoard: (String) -> Unit,
 ) {
     Surface(
         modifier = Modifier
@@ -62,7 +63,7 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            ListBoardCards()
+            ListBoardCards(navigateToBoard = navigateToBoard)
         }
     }
 }
@@ -77,7 +78,9 @@ private fun DefaultPreview() {
         ) {
             HomeScreen(
                 navigateToBluetooth = {},
-                navigateToHome = {})
+                navigateToHome = {},
+                navigateToBoard = {}
+            )
        }
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -26,20 +27,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Composable
-fun ListBoardCards() {
+fun ListBoardCards(navigateToBoard: (String) -> Unit) {
     var boards by remember { mutableStateOf(listOf("Jeux", "Travail", "Raccourcis")) }
     var inputNewBoard by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
 
 
     fun addNewBoard() {
-        boards = listOf(inputNewBoard) + boards
-        Log.d("Add item", boards.toString())
-        inputNewBoard = ""
+        if(inputNewBoard != "") {
+            boards = listOf(inputNewBoard) + boards
+            inputNewBoard = ""
 
-        keyboardController?.hide()
+            keyboardController?.hide()
+        }
     }
 
     Column {
@@ -61,6 +63,7 @@ fun ListBoardCards() {
         LazyColumn {
             items(boards) { board ->
                 Card(
+                    onClick = { navigateToBoard(board) },
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth()

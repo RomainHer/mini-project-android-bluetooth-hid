@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -35,7 +33,6 @@ fun BoardScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black),
-        color = MaterialTheme.colors.background
     ){
         Column(
             modifier = Modifier
