@@ -1,33 +1,76 @@
 package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens
 
+import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.Card
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ListBoardCards() {
+    var boards by remember { mutableStateOf(listOf("Jeux", "Travail", "Raccourcis")) }
+    var inputNewBoard by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
-    var myList = listOf("Canada", "China", "USA", "Pakistan")
 
+    fun addNewBoard() {
+        boards = listOf(inputNewBoard) + boards
+        Log.d("Add item", boards.toString())
+        inputNewBoard = ""
 
-    LazyColumn {
-        items(myList.size) { index ->
-            Card(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth()
+        keyboardController?.hide()
+    }
+
+    Column {
+        Row(
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            TextField(
+                value = inputNewBoard,
+                onValueChange = { inputNewBoard = it },
+                label = { Text("Ajouter un Board") }
+            )
+            FloatingActionButton(
+                onClick = { addNewBoard() },
             ) {
-                Text(
-                    modifier = Modifier.padding(12.dp),
-                    text = "${myList.get(index)}",
-                    color = Color.White
-                )
+                Icon(Icons.Filled.Add, "Floating action button.")
+            }
+        }
+        LazyColumn {
+            items(boards) { board ->
+                Card(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        modifier = Modifier.padding(12.dp),
+                        text = board,
+                        color = Color.White
+                    )
+                }
             }
         }
     }
