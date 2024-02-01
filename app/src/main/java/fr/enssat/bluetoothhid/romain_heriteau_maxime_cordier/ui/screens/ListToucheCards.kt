@@ -1,7 +1,5 @@
 package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +12,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,7 +44,6 @@ fun ListToucheCards() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(20.dp)
-                        .border(1.dp, Color.Black)
                 ) {
                     Box(
                         modifier = Modifier
@@ -57,8 +52,7 @@ fun ListToucheCards() {
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "${myList[index]}",
-                            color = Color.Black
+                            text = "${myList[index]}"
                         )
                     }
                 }
@@ -68,7 +62,6 @@ fun ListToucheCards() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(20.dp)
-                        .border(1.dp, Color.Black)
                         .clickable {
                             showCountrySelection = true
                         }
@@ -81,7 +74,6 @@ fun ListToucheCards() {
                     ) {
                         Text(
                             text = "PLUS",
-                            color = Color.Black
                         )
                     }
                 }
@@ -103,7 +95,6 @@ fun ListToucheCards() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)
-                .border(1.dp, Color.Black)
         ) {
             Box(
                 modifier = Modifier
@@ -113,7 +104,6 @@ fun ListToucheCards() {
             ) {
                 Text(
                     text = selectedCountry!!,
-                    color = Color.Black
                 )
             }
         }
@@ -125,7 +115,6 @@ fun CountrySelectionList(countries: List<String>, onCountrySelected: (String) ->
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
             .padding(16.dp)
     ) {
         Text(
@@ -164,7 +153,6 @@ fun CountrySelectionItem(country: String, onCountrySelected: (String) -> Unit) {
         ) {
             Text(
                 text = country,
-                color = Color.Black
             )
         }
     }
@@ -176,7 +164,6 @@ private fun DefaultPreview() {
     SimpleNavComposeAppTheme(useSystemUiController = false) {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
         ) {
             ListToucheCards(
             )
