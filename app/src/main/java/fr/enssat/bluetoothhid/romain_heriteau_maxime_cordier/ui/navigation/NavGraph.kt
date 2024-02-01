@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothController
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens.BluetoothScreen
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens.BoardScreen
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens.HomeScreen
 
 @Composable
@@ -23,7 +24,7 @@ fun NavGraph(navController: NavHostController, bluetoothController: BluetoothCon
 
         addBluetoothScreen(navController, this, bluetoothController)
 
-
+        addBoardSreen(navController, this)
     }
 }
 
@@ -56,6 +57,24 @@ private fun addHomeScreen(
 
             navigateToBluetooth =  {
             navController.navigate(NavRoute.BluetoothPage.path)
+            },
+            navigateToHome = {
+                navController.navigate(NavRoute.Home.path)
+            }
+        )
+    }
+}
+
+private fun addBoardSreen(
+    navController: NavHostController,
+    navGraphBuilder: NavGraphBuilder
+) {
+    navGraphBuilder.composable(route = NavRoute.BoardPage.path) {
+
+        BoardScreen(
+            boardName = "",
+            navigateToBluetooth =  {
+                navController.navigate(NavRoute.BluetoothPage.path)
             },
             navigateToHome = {
                 navController.navigate(NavRoute.Home.path)
