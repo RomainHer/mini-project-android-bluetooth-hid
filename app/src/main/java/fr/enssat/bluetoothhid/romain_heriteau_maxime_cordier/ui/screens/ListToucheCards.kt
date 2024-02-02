@@ -4,18 +4,26 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -27,8 +35,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.theme.SimpleNavComposeAppTheme
 
+data class Tile(
+    var name: String,
+    var command: String,
+    var icon: String
+)
 @Composable
 fun ListToucheCards() {
+    var tiles by remember {
+        mutableStateOf(mutableStateListOf<Tile?>(*Array<Tile>(12) { Tile(name="", command="", icon="") }))
+    }
     var myList = listOf("Canada", "China", "USA", "Pakistan", "France", "Japan", "England")
 
     var showCountrySelection by remember { mutableStateOf(false) }
@@ -36,9 +52,22 @@ fun ListToucheCards() {
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(8.dp)
+        contentPadding = PaddingValues(8.dp),
+        modifier = Modifier.fillMaxHeight()
     ) {
-        items(myList.size + 1) { index ->
+        items(tiles) { tile ->
+            if(tile == null || tile.icon == "" && tile.name == "" && tile.command == "") {
+                Box(modifier = Modifier.padding(15.dp)) {
+                    FloatingActionButton(
+                        onClick = { },
+                        modifier = Modifier.wrapContentSize().align(Alignment.Center)
+                    ) {
+                        Icon(Icons.Filled.Add, "Floating action button.")
+                    }
+                }
+            }
+        }
+        /*items(myList.size + 1) { index ->
             if (index < myList.size) {
                 Card(
                     modifier = Modifier
@@ -78,9 +107,10 @@ fun ListToucheCards() {
                     }
                 }
             }
-        }
+        }*/
     }
 
+    /*
     // Afficher la liste des pays ou le pays sélectionné en fonction de l'état
     if (showCountrySelection) {
         CountrySelectionList(
@@ -108,6 +138,7 @@ fun ListToucheCards() {
             }
         }
     }
+    */
 }
 
 @Composable
