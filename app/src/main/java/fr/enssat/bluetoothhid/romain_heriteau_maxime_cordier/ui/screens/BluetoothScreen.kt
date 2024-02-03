@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.sp
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothController
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothDesk
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothUiConnection
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.common.DefaultButton
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.theme.SimpleNavComposeAppTheme
 import java.sql.Types.NULL
 

@@ -1,7 +1,5 @@
-package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens
+package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.common
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.Text

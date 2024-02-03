@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.common.DialogNewTouche
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.theme.SimpleNavComposeAppTheme
 
 data class Tile(
@@ -42,9 +44,12 @@ data class Tile(
 )
 @Composable
 fun ListToucheCards() {
-    var tiles by remember {
+    var touches by remember {
         mutableStateOf(mutableStateListOf<Tile?>(*Array<Tile>(12) { Tile(name="", command="", icon="") }))
     }
+
+    var openDialogNewTouche = remember { mutableStateOf(false) }
+    var newTouche = remember { mutableIntStateOf(-1) }
     var myList = listOf("Canada", "China", "USA", "Pakistan", "France", "Japan", "England")
 
     var showCountrySelection by remember { mutableStateOf(false) }
@@ -55,11 +60,11 @@ fun ListToucheCards() {
         contentPadding = PaddingValues(8.dp),
         modifier = Modifier.fillMaxHeight()
     ) {
-        items(tiles) { tile ->
-            if(tile == null || tile.icon == "" && tile.name == "" && tile.command == "") {
+        items(touches) { touche ->
+            if(touche == null || touche.icon == "" && touche.name == "" && touche.command == "") {
                 Box(modifier = Modifier.padding(15.dp)) {
                     FloatingActionButton(
-                        onClick = { },
+                        onClick = { newTouche.value = touches.indexOf(touche); openDialogNewTouche.value = true },
                         modifier = Modifier.wrapContentSize().align(Alignment.Center)
                     ) {
                         Icon(Icons.Filled.Add, "Floating action button.")
@@ -108,6 +113,16 @@ fun ListToucheCards() {
                 }
             }
         }*/
+    }
+
+    when {
+        openDialogNewTouche.value -> {
+            DialogNewTouche(
+                newTouche = newTouche.value,
+                onDismissRequest = { openDialogNewTouche.value = false },
+                onConfirmation = { openDialogNewTouche.value = false }
+            )
+        }
     }
 
     /*
