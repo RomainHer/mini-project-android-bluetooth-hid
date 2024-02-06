@@ -1,5 +1,6 @@
 package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.common
 
+import android.view.KeyEvent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -21,21 +23,34 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.KeyboardReport
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DialogNewTouche(
     newTouche: Int,
+    icons: List<ImageVector>,
+    getIcon: (icon : String) -> ImageVector,
     onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit
+    onConfirmation: (touche : Int, name : String, command : String, icon : String) -> Unit
 ) {
     var toucheName by remember { mutableStateOf("") }
-    val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
-    var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[0]) }
+    var optionsIcons = mutableListOf<String>()
+    icons.forEach { icon ->
+        optionsIcons.add(icon.name)
+    }
+    var optionsCommands = mutableListOf<String>()
+    KeyboardReport.KeyEventMap.keys.forEach { key ->
+        optionsCommands.add(KeyEvent.keyCodeToString(key))
+    }
+    var expandedIcons by remember { mutableStateOf(false) }
+    var expandedCommands by remember { mutableStateOf(false) }
+    var selectedOptionIcon by remember { mutableStateOf(optionsIcons[0]) }
+    var selectedOptionCommand by remember { mutableStateOf(optionsCommands[0]) }
 
     Dialog(onDismissRequest = { onDismissRequest() }) {
         // Draw a rectangle shape with rounded corners inside the dialog
@@ -64,30 +79,31 @@ fun DialogNewTouche(
                         .padding(horizontal = 16.dp)
                 )
                 ExposedDropdownMenuBox(
-                    expanded = expanded,
-                    onExpandedChange = { expanded = it },
+                    expanded = expandedIcons,
+                    onExpandedChange = { expandedIcons = it },
                     modifier = Modifier.padding(16.dp),
                 ) {
                     TextField(
-                        // The `menuAnchor` modifier must be passed to the text field for correctness.
                         modifier = Modifier.menuAnchor(),
                         readOnly = true,
-                        value = selectedOptionText,
+                        value = selectedOptionIcon,
                         onValueChange = {},
-                        label = { Text("Action") },
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                        label = { Text("Icon") },
+                        trailingIcon = {
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedIcons)
+                        },
                         colors = ExposedDropdownMenuDefaults.textFieldColors(),
                     )
                     ExposedDropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
+                        expanded = expandedIcons,
+                        onDismissRequest = { expandedIcons = false },
                     ) {
-                        options.forEach { selectionOption ->
+                        optionsIcons.forEach { selectionOption ->
                             DropdownMenuItem(
-                                text = { Text(selectionOption) },
+                                text = { Icon(imageVector = getIcon(selectionOption), contentDescription = "Icon")},
                                 onClick = {
-                                    selectedOptionText = selectionOption
-                                    expanded = false
+                                    selectedOptionIcon = selectionOption
+                                    expandedIcons = false
                                 },
                                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                             )
@@ -95,30 +111,30 @@ fun DialogNewTouche(
                     }
                 }
                 ExposedDropdownMenuBox(
-                    expanded = expanded,
-                    onExpandedChange = { expanded = it },
+                    expanded = expandedCommands,
+                    onExpandedChange = { expandedCommands = it },
                     modifier = Modifier.padding(horizontal = 16.dp),
                 ) {
                     TextField(
                         // The `menuAnchor` modifier must be passed to the text field for correctness.
                         modifier = Modifier.menuAnchor(),
                         readOnly = true,
-                        value = selectedOptionText,
+                        value = selectedOptionCommand,
                         onValueChange = {},
-                        label = { Text("Icon") },
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                        label = { Text("Commande") },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedCommands) },
                         colors = ExposedDropdownMenuDefaults.textFieldColors(),
                     )
                     ExposedDropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
+                        expanded = expandedCommands,
+                        onDismissRequest = { expandedCommands = false },
                     ) {
-                        options.forEach { selectionOption ->
+                        optionsCommands.forEach { selectionOption ->
                             DropdownMenuItem(
                                 text = { Text(selectionOption) },
                                 onClick = {
-                                    selectedOptionText = selectionOption
-                                    expanded = false
+                                    selectedOptionCommand = selectionOption
+                                    expandedCommands = false
                                 },
                                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                             )
@@ -137,7 +153,7 @@ fun DialogNewTouche(
                         Text("Dismiss")
                     }
                     TextButton(
-                        onClick = { onConfirmation() },
+                        onClick = { onConfirmation(newTouche, toucheName, selectedOptionCommand, selectedOptionIcon) },
                         modifier = Modifier.padding(8.dp),
                     ) {
                         Text("Confirm")

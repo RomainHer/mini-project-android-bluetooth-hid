@@ -26,7 +26,6 @@ fun BluetoothScreen(
     navigateToBluetooth: () -> Unit,
     navigateToHome: () -> Unit,
     bluetoothController: BluetoothController
-
 ) {
     Surface(
         modifier = Modifier.fillMaxSize().background(Color.Black),

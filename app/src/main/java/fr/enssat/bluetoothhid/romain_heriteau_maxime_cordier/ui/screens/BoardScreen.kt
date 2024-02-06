@@ -1,5 +1,7 @@
 package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,6 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothController
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.KeyboardSender
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.Shortcut
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.common.DefaultButton
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.theme.SimpleNavComposeAppTheme
 
@@ -29,6 +34,16 @@ fun BoardScreen(
     navigateToBluetooth : () -> Unit,
     navigateToHome : () -> Unit,
 ) {
+    /*val connected = bluetoothController.status as? BluetoothController.Status.Connected ?: return
+
+    val keyboardSender = KeyboardSender(connected.btHidDevice, connected.hostDevice)
+
+    fun press(shortcut: Shortcut, releaseModifiers: Boolean = true) {
+        @SuppressLint("MissingPermission")
+        val result = keyboardSender.sendKeyboard(shortcut.shortcutKey, shortcut.modifiers, releaseModifiers)
+        if (!result) Log.e("PressShortcut", "Error sending shortcut")
+    }*/
+
 
     Surface(
         modifier = Modifier
@@ -67,24 +82,6 @@ fun BoardScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             ListToucheCards()
-        }
-    }
-
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun DefaultPreview() {
-    SimpleNavComposeAppTheme(useSystemUiController = false) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
-        ) {
-            BoardScreen(
-                boardName = "",
-                navigateToBluetooth={},
-                navigateToHome= {},
-            )
         }
     }
 }
