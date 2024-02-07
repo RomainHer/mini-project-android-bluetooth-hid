@@ -83,7 +83,7 @@ private fun addBoardScreen(
             navigateToHome = {
                 navController.navigate(NavRoute.Home.path)
             },
-            bluetoothController = BluetoothController()
+            bluetoothController = bluetoothController
         )
     }
 }

@@ -40,12 +40,16 @@ fun BoardScreen(
     var isConnected = false
 
     if(connected != null) {
-        val keyboardSender = KeyboardSender(connected.btHidDevice, connected.hostDevice)
+        keyboardSender = KeyboardSender(connected.btHidDevice, connected.hostDevice)
+        isConnected = true
     }
 
     fun press(shortcut: Shortcut, releaseModifiers: Boolean = true) : Boolean {
         @SuppressLint("MissingPermission")
-        if(keyboardSender == null) return false
+        if(keyboardSender == null) {
+            Log.e("PressShortcut", "Bluetooth not connected")
+            return false
+        }
         else {
             val result = keyboardSender.sendKeyboard(shortcut.shortcutKey, shortcut.modifiers, releaseModifiers)
             if (!result)  {

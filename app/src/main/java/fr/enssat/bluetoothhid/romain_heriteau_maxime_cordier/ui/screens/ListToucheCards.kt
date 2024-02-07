@@ -1,6 +1,6 @@
 package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens
 
-import android.util.Log
+import android.view.KeyEvent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,8 +35,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import compose.icons.AllIcons
 import compose.icons.FeatherIcons
-import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothController
-import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.KeyboardSender
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.Shortcut
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.common.DialogNewTouche
 
@@ -96,7 +94,7 @@ fun ListToucheCards(
                     .fillMaxSize()
                 ) {
                     Card(
-                        onClick = { Log.d("Click", "CardExample: Card Click")},
+                        onClick = { onPressCard(Shortcut(KeyEvent.keyCodeFromString(touche.command)), true) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.Center),
