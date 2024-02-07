@@ -3,10 +3,8 @@ package fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothController
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens.BluetoothScreen
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens.BoardScreen
@@ -24,7 +22,7 @@ fun NavGraph(navController: NavHostController, bluetoothController: BluetoothCon
 
         addBluetoothScreen(navController, this, bluetoothController)
 
-        addBoardScreen(navController, this)
+        addBoardScreen(navController, this, bluetoothController)
     }
 }
 
@@ -72,7 +70,8 @@ private fun addHomeScreen(
 
 private fun addBoardScreen(
     navController: NavHostController,
-    navGraphBuilder: NavGraphBuilder
+    navGraphBuilder: NavGraphBuilder,
+    bluetoothController: BluetoothController
 ) {
     navGraphBuilder.composable(route = NavRoute.BoardPage.path + "/{boardName}") { backStackEntry ->
 
@@ -83,7 +82,8 @@ private fun addBoardScreen(
             },
             navigateToHome = {
                 navController.navigate(NavRoute.Home.path)
-            }
+            },
+            bluetoothController = BluetoothController()
         )
     }
 }

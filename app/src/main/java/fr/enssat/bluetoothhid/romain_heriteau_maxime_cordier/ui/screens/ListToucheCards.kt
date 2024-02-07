@@ -35,7 +35,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import compose.icons.AllIcons
 import compose.icons.FeatherIcons
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothController
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.KeyboardSender
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.Shortcut
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.common.DialogNewTouche
 
 data class Tile(
@@ -45,7 +47,9 @@ data class Tile(
 )
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ListToucheCards() {
+fun ListToucheCards(
+    onPressCard: (shortcut: Shortcut, releaseModifiers: Boolean) -> Boolean,
+) {
     var touches by remember {
         mutableStateOf(mutableStateListOf<Tile?>(*Array<Tile>(12) { Tile(name="", command="", icon="") }))
     }
