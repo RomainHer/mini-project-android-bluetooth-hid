@@ -6,6 +6,12 @@ Ce projet a été développé dans le cadre d'études en école d'ingénieur en 
 
 ##  Installation
 
+1. Clone the repository `git clone <repo>`
+2. Open Android Studio
+3. Sync the build.gradle.kts file (in Module: app) 
+4. Set up your device or your emulator
+4. Run the project on your device/emulator
+
 ##  Problème *(Issue)*
 
 Le probleme est que le projet n'est pas totalement fini car la partie base de données local avec Room ne fonctionne pas. Si vous etes interessé pour finir la partie Room n'hesitez pas ! **(regardez les issues)**
