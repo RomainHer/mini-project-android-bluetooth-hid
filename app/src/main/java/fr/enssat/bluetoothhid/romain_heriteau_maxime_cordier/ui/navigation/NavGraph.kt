@@ -5,20 +5,21 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.room.AppDatabase
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothController
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens.BluetoothScreen
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens.BoardScreen
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.screens.HomeScreen
 
 @Composable
-fun NavGraph(navController: NavHostController, bluetoothController: BluetoothController) {
+fun NavGraph(navController: NavHostController, bluetoothController: BluetoothController, appDatabase : AppDatabase) {
 
     NavHost(
         navController = navController,
         startDestination = NavRoute.Home.path
     ) {
 
-        addHomeScreen(navController, this)
+        addHomeScreen(navController, this, appDatabase)
 
         addBluetoothScreen(navController, this, bluetoothController)
 
@@ -47,7 +48,8 @@ private fun addBluetoothScreen(
 
 private fun addHomeScreen(
     navController: NavHostController,
-    navGraphBuilder: NavGraphBuilder
+    navGraphBuilder: NavGraphBuilder,
+    appDatabase : AppDatabase
 ) {
     navGraphBuilder.composable(route = NavRoute.Home.path) {
 
@@ -63,7 +65,8 @@ private fun addHomeScreen(
                 navController.navigate(NavRoute.BoardPage.path+"/$boardName") {
                     popUpTo(NavRoute.Home.path)
                 }
-            }
+            },
+            appDatabase = appDatabase
         )
     }
 }

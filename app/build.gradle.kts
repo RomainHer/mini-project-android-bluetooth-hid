@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -51,6 +52,19 @@ android {
 
 dependencies {
 
+    val roomVersion = "2.5.0"
+
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$roomVersion")
+
+    // To use Kotlin Symbol Processing (KSP)
+    //ksp("androidx.room:room-compiler:$room_version")
+
     implementation("androidx.core:core-ktx:1.10.0")
 
     val compose_version = "1.4.1"
@@ -62,6 +76,11 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
     implementation("androidx.navigation:navigation-compose:2.5.3")
     debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
+
+    val live_cycle_version = "2.7.0"
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$live_cycle_version")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$live_cycle_version")
+    implementation ("androidx.lifecycle:lifecycle-common-java8:$live_cycle_version")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")

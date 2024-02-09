@@ -62,7 +62,7 @@ fun BluetoothScreen(
             ) {
 
                 BluetoothUiConnection(bluetoothController)
-                BluetoothDesk(bluetoothController)
+                //BluetoothDesk(bluetoothController)
             }
         }
     }

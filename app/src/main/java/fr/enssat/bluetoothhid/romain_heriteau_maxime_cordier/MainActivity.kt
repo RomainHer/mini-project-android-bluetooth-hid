@@ -10,6 +10,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
+import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.room.AppDatabase
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.bluetooth.BluetoothController
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.navigation.NavGraph
 import fr.enssat.bluetoothhid.romain_heriteau_maxime_cordier.ui.theme.SimpleNavComposeAppTheme
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private lateinit var bluetoothController: BluetoothController
+    private lateinit var appDatabase : AppDatabase
 
     private fun ensureBluetoothPermission(activity: ComponentActivity) {
         val requestPermissionLauncher = activity.registerForActivityResult(ActivityResultContracts.RequestPermission()){
@@ -39,8 +41,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         ensureBluetoothPermission(this)
         bluetoothController = BluetoothController()
+        appDatabase = AppDatabase.getDatabase(applicationContext)
         setContent {
-            MainScreen(bluetoothController)
+            MainScreen(bluetoothController, appDatabase)
         }
     }
 
@@ -52,11 +55,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun MainScreen(
-    bluetoothController : BluetoothController
+    bluetoothController : BluetoothController,
+    appDatabase : AppDatabase
 ) {
     SimpleNavComposeAppTheme {
         val navController = rememberNavController()
-        NavGraph(navController, bluetoothController)
+        NavGraph(navController, bluetoothController, appDatabase)
     }
 }
 
