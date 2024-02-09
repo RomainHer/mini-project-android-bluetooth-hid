@@ -8,6 +8,6 @@ Ce projet a été développé dans le cadre d'études en école d'ingénieur en 
 
 ##  Problème *(Issue)*
 
-Le probleme est que le projet n'est pas totalement fini car la partie base de données local avec Room ne fonctionne pas. Si vous etes interessé pour finir la partie Room n'hesitez pas !
+Le probleme est que le projet n'est pas totalement fini car la partie base de données local avec Room ne fonctionne pas. Si vous etes interessé pour finir la partie Room n'hesitez pas ! **(regardez les issues)**
 
-*However, the project is not entirely complete due to a malfunction in the local database part with Room. If you are interested in finishing the Room component, feel free to reach out!*
+*However, the project is not entirely complete due to a malfunction in the local database part with Room. If you are interested in finishing the Room component, feel free to reach out!* ***(check issues)***
